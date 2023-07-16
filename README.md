@@ -1,5 +1,7 @@
 # HerwigCMSDev
-This page holds instructions on how to build and update the Herwig interface in CMSSW using your lxplus account.
+This page holds instructions on how to build and update the Herwig interface in CMSSW using your lxplus account, supplementary to what one can find in the official [CMS Herwig Twiki](https://twiki.cern.ch/twiki/bin/viewauth/CMS/Herwig7Interface), which I find harder to maintain.
+
+
 
 ## Which CMSSW release ?
 Assuming that you want to commit something new, you first need to commit it to HEAD and later make a pull request (PR) to backport it to earlier releases (e.g., ultralegacy for Run 2 or others). Check which is the latestest greatest CMSSW release here: 
@@ -15,7 +17,7 @@ Useful page for new developers:
    * [https://twiki.cern.ch/twiki/bin/view/CMS/SoftwareDevelopementToolsSubTask](https://twiki.cern.ch/twiki/bin/view/CMS/SoftwareDevelopementToolsSubTask)
    * [https://cms-sw.github.io/build-release.html
 ](https://cms-sw.github.io/build-release.html)
-
+   
 To find out which versions of CMSSW your account currently supports
 
 `scram list CMSSW`

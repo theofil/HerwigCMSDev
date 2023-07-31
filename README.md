@@ -77,18 +77,16 @@ scram b -j 8
 ```
 
 ## Analysis example starting from NANOAODSIM level
-Supposing we want to compare ```Herwig matcbox``` samples with another generator, say with the ```amcatnloFXFX```, we first need to locate the files we want to use and copy some of them for easiness in some local/tmp folder in lxplus or elsewhere. For locating samples in DAS read the [https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookLocatingDataSamples](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookLocatingDataSamples)
+In this example we want to compare ```Herwig matcbox``` samples with another generator, say with the ```amcatnloFXFX```. We first locate the files in DAS and copy (some of) them for easiness in a local ```lxplus``` folder. For locating samples in DAS read the 
+
+[https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookLocatingDataSamples](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookLocatingDataSamples).
 
 For example, here we will copy files from 
 
 [DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8](https://cmsweb.cern.ch/das/request?instance=prod/global&input=file+dataset%3D%2FDYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8%2FRunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2%2FNANOAODSIM) through ```xrdcp```.
 
-We will supplement the logical filename of our interest with the prefix ```root://cms-xrd-global.cern.ch/```, for example for copying the
+We will supplement the logical filename of our interest with the prefix ```root://cms-xrd-global.cern.ch/```
 
-```
-/store/mc/RunIISummer20UL18NanoAODv9/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/100000/13D0AD97-6B32-CB4C-BA87-5E37BA4CF20E.root
-```
-in a local ```lxplus``` folder we need to issue this command
 ```
 xrdcp root://cms-xrd-global.cern.ch//store/mc/RunIISummer20UL18NanoAODv9/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/100000/13D0AD97-6B32-CB4C-BA87-5E37BA4CF20E.root .
 ```
@@ -98,9 +96,9 @@ Upon asking the file transfer, we will need to provide our grid certificate PEM 
 cryptossl_X509CreateProxy: Your identity: /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=theofil/CN=650647/CN=Konstantinos Theofilatos
 ```
 
-and of course having a valid grid certificate installed in our lxplus account, usually inside the hidden folder ```~/.globus```.
+and have valid grid certificate installed in our lxplus account (usually inside the hidden folder ```~/.globus```).
 
-A useful tip is to use the ```dasgoclient``` to locate the files. *But*, don't forget first to create a valid ```voms-proxy-init```, for example the commands below
+A useful tip is to use the ```dasgoclient``` to locate the files. *But*, don't forget first to create a valid ```voms-proxy-init``` ahead, for example the commands below
 
 
 ```
@@ -137,7 +135,11 @@ If our sample is *small* < 1-2 Gb, we can even try merge all our files ```*root`
 hadd PPD-RunIISummer20UL18GEN-00015.root *.root
 ```
 
-Then download the [https://raw.githubusercontent.com/theofil/h7friends/main/makefriends.py](https://raw.githubusercontent.com/theofil/h7friends/main/makefriends.py) and use it to create end flat ROOT trees that could be used for quick physics analysis. Try to read and understand what the script is doing, it applies from cross-object cleaning and creates a weight that could be used to normalize by their cross sections ```(xs)``` different physics simulations.
+Then we download the 
+
+[https://raw.githubusercontent.com/theofil/h7friends/main/makefriends.py](https://raw.githubusercontent.com/theofil/h7friends/main/makefriends.py) 
+
+and use it to create end flat ROOT trees that could be used for quick physics analysis. Try to read and understand what the script is doing, it applies a light-weight cross-object cleaning and dilepton event interpretaion. It also creates a weight ```kweight``` that could be used to normalize by their absolute cross sections ```(xs)``` different physics simulations.
 
 ```
 wget https://raw.githubusercontent.com/theofil/h7friends/main/makefriends.py
@@ -168,7 +170,11 @@ number of sumW 6048.0
 number of sumW2 566.8
 ```
 
-In the end of the day you should have a small ROOT file named ```h7mbox.root``` that could be used for physics comparisons. You can find this file as well as other here [http://theofil.web.cern.ch/theofil/files/pcmbox/](http://theofil.web.cern.ch/theofil/files/pcmbox/) but it should be straightforward to replicate the procedure for any new ```NANOAODSIM``` sample that might appear in DAS.
+In the end of the day you should have a small ROOT file named ```h7mbox.root```, which could be used for physics comparisons. You can find this file as well as others here 
+
+[http://theofil.web.cern.ch/theofil/files/pcmbox/](http://theofil.web.cern.ch/theofil/files/pcmbox/) 
+
+but it should be straightforward to replicate the procedure for any kind of ```NANOAODSIM``` sample that is in DAS.
 
 
 

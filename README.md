@@ -66,9 +66,10 @@ Decide on the name of the branch that your developments will go and execute the
 in the command line.
 
 ### Ultralegacy CMSSW_10_6_22
+First loing to lxplus7.cern.ch and switch to the folder you want to place the CMSSW_10_6_22 installation.
 ```
 export SCRAM_ARCH="slc7_amd64_gcc700" # setenv for csh
-scram list CMSSW_10_6 # Gives list of available releases, most recent at time of writing is 10_6_22:
+scram list | grep CMSSW_10_6 # Gives list of available releases, most recent at time of writing is 10_6_22:
 cmsrel CMSSW_10_6_22
 cd CMSSW_10_6_22/src
 cmsenv
@@ -76,7 +77,7 @@ git cms-addpkg GeneratorInterface/Herwig7Interface
 scram b -j 8
 ```
 
-## Analysis example starting from NANOAODSIM level
+## Analysis example starting from NANOGEN level
 In this example we want to compare ```Herwig matcbox``` samples with another generator, say with the ```amcatnloFXFX```. We first locate the files in DAS and copy (some of) them for easiness in a local ```lxplus``` folder. For locating samples in DAS read the 
 
 [https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookLocatingDataSamples](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookLocatingDataSamples).
@@ -88,7 +89,7 @@ For example, here we will copy files from
 We will supplement the logical filename of our interest with the prefix ```root://cms-xrd-global.cern.ch/```
 
 ```
-xrdcp root://cms-xrd-global.cern.ch//store/mc/RunIISummer20UL18NanoAODv9/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/100000/13D0AD97-6B32-CB4C-BA87-5E37BA4CF20E.root .
+xrdcp root://cms-xrd-global.cern.ch//store/mc/RunIISummer20UL18NanoAODv9/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v4/30000/50969F11-6274-3A45-B5AB-B1AACE38A467.root .
 ```
 Upon asking the file transfer, we will need to provide our grid certificate PEM password
 
@@ -97,6 +98,12 @@ cryptossl_X509CreateProxy: Your identity: /DC=ch/DC=cern/OU=Organic Units/OU=Use
 ```
 
 and have valid grid certificate installed in our lxplus account (usually inside the hidden folder ```~/.globus```).
+
+You can try also locating files that are available in EOS at CERN, e.g.,
+```
+root -l /eos/cms/store/mc/RunIISummer20UL18NanoAODv9/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1_ext1-v2/2540000/01AFA035-0612-924B-86CD-5246D41B1F69.root 
+```
+should just work if the file is still available when you try this example.
 
 A useful tip is to use the ```dasgoclient``` to locate the files. *But*, don't forget first to create a valid ```voms-proxy-init``` ahead, for example the commands below
 

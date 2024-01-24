@@ -1,10 +1,10 @@
 # HerwigCMSDev
-This page holds instructions on how to build and update the Herwig interface in CMSSW using your lxplus account, supplementary to what one can find in the official [CMS Herwig Twiki](https://twiki.cern.ch/twiki/bin/viewauth/CMS/Herwig7Interface), which I find harder to maintain.
+This page holds instructions on how to build and update the Herwig interface in CMSSW using your lxplus account, supplementary to what one can find in the official [CMS Herwig Twiki](https://twiki.cern.ch/twiki/bin/viewauth/CMS/Herwig7Interface).
 
 
 
 ## Which CMSSW release ?
-Assuming that you want to commit something new, you first need to commit it to HEAD and later make a pull request (PR) to backport it to earlier releases (e.g., ultralegacy for Run 2 or others). Check which is the latestest greatest CMSSW release here: 
+Assuming that you want to commit something new that you developed, you first need to commit it to HEAD and later make a pull request (PR) to backport it to earlier releases (e.g., ultralegacy for Run 2 or others). Check which is the latest greatest CMSSW release here: 
 
 [https://twiki.cern.ch/twiki/bin/viewauth/CMS/ReleaseSchedule](https://twiki.cern.ch/twiki/bin/viewauth/CMS/ReleaseSchedule)
 
@@ -22,7 +22,7 @@ To find out which versions of CMSSW your account currently supports
 
 `scram list CMSSW`
 
-You might need set your account's enviromental variables to a different scram arch to see the latest greatest.
+You might need set your account's environmental variables to a different scram arch to see the latest greatest.
 
 `ls  /cvmfs/cms.cern.ch/`
 
@@ -30,7 +30,7 @@ Will show you all the available `slc*_amd64_gcc***` architectures. Once you find
 
 `export SCRAM_ARCH=slc7_amd64_gcc11`
 
-Assumming that you use BASH shell. Find out which linux shell you use by typing `echo $SHELL` in the command shell.
+Assuming that you use BASH shell. Find out which linux shell you use by typing `echo $SHELL` in the command shell.
 
 If you try to build CMSSW over an unsupported release, you will get a warning saying, e.g., 
 
@@ -45,7 +45,7 @@ In some cases, you might even need to login to a more recent lxplus*.cern.ch in
 
 ## Fast Installation
 ### CMSSW_13_X_X
-The latest greatest when writting this instructions was `CMSSW_13_X_X`
+The latest greatest when writing this instructions was `CMSSW_13_X_X`
 
 ```
 ssh theofil@lxplus8.cern.ch
@@ -138,7 +138,7 @@ We can try to copy all files recursively
 xrdcp -r root://cms-xrd-global.cern.ch//store/mc/RunIISummer20UL18NanoAODv9/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v4/30000/ .
 ```
 
-If our sample is *small* < 1-2 Gb, we can even try merge all our files ```*root``` in a single root file using hadd. In the example below a new file will be created that will include all files in a single file named as PPD-RunIISummer20UL18GEN-00015.root.
+If our sample is *small* < 1-2 Gb, we can even try merge all our files ```*root``` in a single root file using ```hadd```. In the example below a new file will be created that will include all files in a single file named as PPD-RunIISummer20UL18GEN-00015.root.
 
 ```
 hadd PPD-RunIISummer20UL18GEN-00015.root *.root
@@ -148,7 +148,7 @@ Then we download the
 
 [https://raw.githubusercontent.com/theofil/h7friends/main/makefriends.py](https://raw.githubusercontent.com/theofil/h7friends/main/makefriends.py) 
 
-and use it to create end flat ROOT trees that could be used for quick physics analysis. Try to read and understand what the script is doing, it applies a light-weight cross-object cleaning and dilepton event interpretaion. It also creates a weight ```kweight``` that could be used to normalize by their absolute cross sections ```(xs)``` different physics simulations.
+and use it to create end flat ROOT trees that could be used for quick physics analysis. Try to read and understand what the script is doing, it applies a light-weight cross-object cleaning and dilepton event interpretation. It also creates a weight ```kweight``` that could be used to normalize by their absolute cross sections ```(xs)``` different physics simulations.
 
 ```
 wget https://raw.githubusercontent.com/theofil/h7friends/main/makefriends.py
@@ -188,8 +188,8 @@ but it should be straightforward to replicate the procedure for any kind of ```N
 
 
 ## Create NANOGEN starting from GEN
-For this we will use [https://github.com/kdlong/WMassNanoGen/blob/master/runCmsDriverGenToNanoGEN.sh](GenToNanoGEN.sh) after setting up (cmsenv) the appropriate CMSSW version.
-We execute the lines below
+For this we will customize the code from [runCmsDriverGenToNanoGEN.sh](https://github.com/kdlong/WMassNanoGen/blob/master/runCmsDriverGenToNanoGEN.sh) to run on our local files. 
+After setting up (cmsenv) the appropriate CMSSW version, We execute the lines below
 ```
 cmsDriver.py step2 \
     --fileout file:PPD-RunIISummer20UL18GEN-00019.NANOGEN.root  --mc --eventcontent NANOAODSIM \

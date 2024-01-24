@@ -66,7 +66,7 @@ Decide on the name of the branch that your developments will go and execute the
 in the command line.
 
 ### Ultralegacy CMSSW_10_6_22
-First loing to lxplus7.cern.ch and switch to the folder you want to place the CMSSW_10_6_22 installation.
+You may want to login lxplus7.cern.ch and switch to the folder you want to place the CMSSW_10_6_22 installation, before continuing.
 ```
 export SCRAM_ARCH="slc7_amd64_gcc700" # setenv for csh
 scram list | grep CMSSW_10_6 # Gives list of available releases, most recent at time of writing is 10_6_22:
@@ -78,6 +78,8 @@ scram b -j 8
 ```
 
 ## Analysis example starting from NANOGEN level
+What's NANOGEN ? Check here [https://twiki.cern.ch/twiki/bin/view/CMS/NanoGen](https://twiki.cern.ch/twiki/bin/view/CMS/NanoGen).
+
 In this example we want to compare ```Herwig matcbox``` samples with another generator, say with the ```amcatnloFXFX```. We first locate the files in DAS and copy (some of) them for easiness in a local ```lxplus``` folder. For locating samples in DAS read the 
 
 [https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookLocatingDataSamples](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookLocatingDataSamples).
@@ -152,7 +154,7 @@ and use it to create end flat ROOT trees that could be used for quick physics an
 wget https://raw.githubusercontent.com/theofil/h7friends/main/makefriends.py
 python -i makefriends.py PPD-RunIISummer20UL18GEN-00015.root --xs 6048 --output h7mbox.root
 
-### script's output below
+### output of makefriends.py
 
 TClass::Init:0: RuntimeWarning: no dictionary for class edm::Hash<1> is available
 TClass::Init:0: RuntimeWarning: no dictionary for class edm::ProcessHistory is available
@@ -185,7 +187,19 @@ but it should be straightforward to replicate the procedure for any kind of ```N
 
 
 
-
+## Create NANOGEN starting from GEN
+For this we will use [https://github.com/kdlong/WMassNanoGen/blob/master/runCmsDriverGenToNanoGEN.sh](GenToNanoGEN.sh) after setting up (cmsenv) the appropriate CMSSW version.
+We execute the lines below
+```
+cmsDriver.py step2 \
+    --fileout file:PPD-RunIISummer20UL18GEN-00019.NANOGEN.root  --mc --eventcontent NANOAODSIM \
+    --filein file:PPD-RunIISummer20UL18GEN-00019.root \
+    --datatier NANOAODSIM --conditions 106X_upgrade2018_realistic_v4 --step NANOGEN \
+    --python_filename makeNanoGen.py \
+    --customise PhysicsTools/NanoAOD/nanogen_cff.customizeNanoGEN \
+    -n -1 --no_exec 
+```
+and then we run ```cmsRun makeNanoGen.py```
 
 
 

@@ -111,7 +111,7 @@ A useful tip is to use the ```dasgoclient``` to locate the files. *But*, don't f
 
 
 ```
-voms-proxy-init
+voms-proxy-init -voms cms -rfc
 dasgoclient --query "file dataset=/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v4/NANOAODSIM"
 ```
 
